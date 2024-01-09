@@ -10,7 +10,7 @@ interface JobCardProps {
 
 const JobCard = ({ job }: JobCardProps) => {
   return (
-    <article className="flex gap-3 border rounded-lg p-5 hover:bg-muted/60">
+    <article className="flex gap-6 border rounded-lg p-5 hover:bg-muted/60">
       <Image
         src={job.companyLogoUrl ? job.companyLogoUrl : companyLogoPlaceholder}
         width={100}
@@ -47,7 +47,7 @@ const JobCard = ({ job }: JobCardProps) => {
         </div>
       </div>
       <div className="hidden sm:flex flex-col shrink-0 items-end justify-between">
-        <div className="border rounded- px-2 py-0.5 bg-muted text-muted-foreground text-sm">
+        <div className="border rounded- px-2 py-0.5 bg-slate-800 text-white text-sm">
           {job.type}
         </div>
         <span className="flex items-center gap-1.5 text-muted-foreground">
