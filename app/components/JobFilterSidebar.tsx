@@ -4,9 +4,24 @@ import Select from "@/components/ui/select";
 import prisma from "../../lib/prisma";
 import { jobTypes } from "@/lib/job-types";
 import { Button } from "@/components/ui/button";
+import { jobFilterSchema } from "@/lib/validator";
+import { redirect } from "next/navigation";
 
 async function filterJobs(formData: FormData) {
   "use server";
+
+  const values = Object.fromEntries(formData.entries());
+
+  const { q, type, location, remote } = jobFilterSchema.parse(values);
+
+  const searchParams = new URLSearchParams({
+    ...(q && { q: q.trim() }),
+    ...(type && { type }),
+    ...(location && { location }),
+    ...(remote && { remote: "true" }),
+  });
+
+  redirect(`/?${searchParams}`);
 }
 
 const JobFilterSidebar = async () => {
@@ -29,9 +44,9 @@ const JobFilterSidebar = async () => {
             <Input id="q" name="q" placeholder="Title, company, etc" />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="types">Types</Label>
-            <Select id="types" name="types" defaultValue="">
-              <option>All types</option>
+            <Label htmlFor="type">Type</Label>
+            <Select id="type" name="type" defaultValue="">
+              <option value="">All types</option>
               {jobTypes.map((type) => (
                 <option key={type} value={type}>
                   {type}
@@ -42,7 +57,7 @@ const JobFilterSidebar = async () => {
           <div className="flex flex-col gap-2">
             <Label htmlFor="location">Location</Label>
             <Select id="location" name="location" defaultValue="">
-              <option>All locations</option>
+              <option value="">All locations</option>
               {allLocation.map((location) => (
                 <option key={location} value={location}>
                   {location}
