@@ -1,17 +1,25 @@
-import prisma from "../lib/prisma";
-import JobCard from "./components/JobCard";
+import { JobFilterValues } from "@/lib/validator";
+import JobResults from "./JobResults";
 import JobFilterSidebar from "./components/JobFilterSidebar";
 
-async function getJobs() {
-  const jobs = await prisma?.job.findMany({
-    where: { approved: true },
-    orderBy: { createdAt: "desc" },
-  });
-  return jobs;
+interface PageProps {
+  searchParams: {
+    q?: string;
+    type?: string;
+    location?: string;
+    remote?: string;
+  };
 }
 
-export default async function Home() {
-  const jobs = await getJobs();
+export default async function Home({
+  searchParams: { q, type, location, remote },
+}: PageProps) {
+  const filterValues: JobFilterValues = {
+    q,
+    type,
+    location,
+    remote: remote === "true",
+  };
 
   return (
     <main className="mx-auto my-10 max-w-5xl space-y-10 px-3">
@@ -23,11 +31,7 @@ export default async function Home() {
       </div>
       <section className="flex flex-col gap-4 md:flex-row">
         <JobFilterSidebar />
-        <div className="space-y-4">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </div>
+        <JobResults filterValues={filterValues} />
       </section>
     </main>
   );
