@@ -14,21 +14,40 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Select from "@/components/ui/select";
-import { jobTypes } from "@/lib/job-types";
-import { createJobSchema } from "@/lib/validator";
+import { jobTypes, locationTypes } from "@/lib/job-types";
+import { CreateJobValues, createJobSchema } from "@/lib/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { draftToMarkdown } from "markdown-draft-js";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useToast } from "@/components/ui/use-toast";
+import { createJobPosting } from "./actions";
 
 const CreateJobForm = () => {
-  const form = useForm<z.infer<typeof createJobSchema>>({
+  const { toast } = useToast();
+
+  const form = useForm<CreateJobValues>({
     resolver: zodResolver(createJobSchema),
   });
 
-  function onSubmit(values: z.infer<typeof createJobSchema>) {
-    console.log(values);
+  async function onSubmit(values: CreateJobValues) {
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
+
+    try {
+      await createJobPosting(formData);
+    } catch (error) {
+      toast({
+        className: "bg-red text-white font-semiBold",
+        description: "Something went wrong, please try again.",
+      });
+    }
   }
 
   return (
@@ -117,6 +136,37 @@ const CreateJobForm = () => {
                         fieldValues.onChange(file);
                       }}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="locationtype"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location type</FormLabel>
+                  <FormControl>
+                    <Select
+                      {...field}
+                      defaultValue=""
+                      onChange={(e) => {
+                        field.onChange(e);
+                        if (e.currentTarget.value === "Remote") {
+                          form.trigger("location");
+                        }
+                      }}
+                    >
+                      <option value="" hidden>
+                        Select an option
+                      </option>
+                      {locationTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
