@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "jobflex-files.public.blob.vercel-storage.com",
+        hostname: "7u3px3kidvgayoek.public.blob.vercel-storage.com",
         port: "",
       },
     ],
