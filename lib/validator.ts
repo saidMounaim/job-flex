@@ -6,14 +6,12 @@ const requiredString = z.string().min(1);
 const validImageFile = z
   .custom<File | undefined>()
   .refine(
-    (file) =>
-      !file ||
-      (file instanceof File && file.type.startsWith("image/"),
-      "Must be image file"),
+    (file) => !file || (file instanceof File && file.type.startsWith("image/")),
+    "Must be an image file",
   )
   .refine((file) => {
     return !file || file.size < 1024 * 1024 * 2;
-  }, "Image must be less than 2MB");
+  }, "File must be less than 2MB");
 
 const applicationSchema = z
   .object({
