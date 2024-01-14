@@ -5,6 +5,7 @@ import { currentUser } from "@clerk/nextjs";
 import prisma from "../../lib/prisma";
 import { revalidatePath } from "next/cache";
 import { del } from "@vercel/blob";
+import { redirect } from "next/navigation";
 
 export async function approveJob(previousState: any, formData: FormData) {
   try {
@@ -54,4 +55,5 @@ export async function deleteJob(previousState: any, formData: FormData) {
     }
     return { error: message };
   }
+  redirect("/admin");
 }
