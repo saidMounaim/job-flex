@@ -6,7 +6,7 @@ import prisma from "../../lib/prisma";
 import { revalidatePath } from "next/cache";
 import { del } from "@vercel/blob";
 
-export async function approveJob(formData: FormData) {
+export async function approveJob(previousState: any, formData: FormData) {
   try {
     const jobId = parseInt(formData.get("jobId") as string);
 
@@ -28,7 +28,7 @@ export async function approveJob(formData: FormData) {
   }
 }
 
-export async function deleteJob(formData: FormData) {
+export async function deleteJob(previousState: any, formData: FormData) {
   try {
     const jobId = parseInt(formData.get("jobId") as string);
 
