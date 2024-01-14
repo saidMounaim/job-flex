@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Job Flex
 
-## Getting Started
+Job Flex Using Next.js 14, Prisma, TailwindCSS & Clerk 🤩
 
-First, run the development server:
+![screenshot](https://i.ibb.co/wCRyF6c/Capture.png)
+![screenshot](https://i.ibb.co/bKygpSX/Capture1.png)
+![screenshot](https://i.ibb.co/5GG7Dmb/Capture3.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features:
+
+- Post a job
+- Approve or delete a job
+- Admin dashboard
+- Upload file to Vercel blob
+
+## Technology Stack:
+
+- Next.js
+- Clerk
+- Prisma
+- TypeScript
+- TailwindCSS
+- Shadcn UI
+
+## Usage
+
+### Env Variables
+
+Create a .env file in then root and add the following
+
+```
+POSTGRES_URL=
+POSTGRES_PRISMA_URL=
+POSTGRES_URL_NON_POOLING=
+POSTGRES_USER="default"
+POSTGRES_HOST=
+POSTGRES_PASSWORD=
+POSTGRES_DATABASE="verceldb"
+
+BLOB_READ_WRITE_TOKEN=
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Run
 
-## Learn More
+```
+# Run project
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Version: 1.0.0
+- License: MIT
+- Author: Said Mounaim
